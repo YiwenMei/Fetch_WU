@@ -74,8 +74,8 @@ for p=1:length(Lr)
       if rem(call_count,calrate)==0
         t1=tic();
       end
-      
-      rec=JSON.parse(urlread(url));
+      rec=urlread(url);
+      rec=JSON.parse(rec);
       call_count=call_count+1;
 
 % Pause if the actucal call rate exceeds the call rate allowed
@@ -97,8 +97,13 @@ for p=1:length(Lr)
 
       elseif isfield(rec.response,'results') % Ambiguous location
         amList=cell2mat(rec.response.results);
-        eval(sprintf('idx=strcmp(%s_info{1},{amList.city});',tp1{p}));
+        eval(sprintf('idx=strcmp(%s_info{2},{amList.city});',tp1{p}));
         amLoc=[amLoc;{tp1{p} id amList(idx).zmw}];
+        nof=-1;
+        break
+
+      elseif isfield(rec.response,'error') % Ambiguous location
+        disp([id ' ' rec.response.error.type]);
         nof=-1;
         break
       end
