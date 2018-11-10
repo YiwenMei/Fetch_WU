@@ -138,5 +138,5 @@ pws_info=pws_info(~cellfun('isempty',pws_info(:,4)),:);
 [~,id,~]=unique(pws_info(:,4));
 pws_info=pws_info(id,:);
 
-fprintf('%i airports and %i pws found for the region.',size(List_ap,1),size(List_pws,1));
+fprintf('%i airports and %i pws found for the region.',size(airport_info,1),size(pws_info,1));
 end
